@@ -18,7 +18,9 @@ public class Catan extends Game {
 	private ArrayList<User> playerList = new ArrayList<User>();
 	private User playerTurn;
 	private Board board;
-
+	
+	private String gameData;
+	
 	public int getMaxPlayerAmount() {
 		return 4;
 	}
@@ -46,7 +48,10 @@ public class Catan extends Game {
 	public String getGameData(String event) {
 		switch (event) {
 		case "SETUP":
-			return "joingame?game=Catan&setup=53411505415322241344031670528157342698060510063002100101000151515242524333";
+			board.init();
+			gameData = board.getStatus();
+			return "joingame?game=Catan&setup=" + gameData;
+			//return "joingame?game=Catan&setup=53411505415322241344031670528157342698060510063002100101000151515242524333";
 		}
 		return "";
 	}

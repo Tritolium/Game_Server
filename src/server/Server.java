@@ -37,7 +37,7 @@ public class Server extends Thread {
 	}
 
 	public void run() {
-		
+
 		Socket clientSocket = null;
 
 		/*
@@ -57,6 +57,11 @@ public class Server extends Thread {
 		 */
 		System.out.println("The server started.");
 		GUI.getInstance().write("Server started on port " + port);
+		try {
+			GUI.getInstance().write("Running on " + InetAddress.getLocalHost() + ":" + port);
+		} catch (UnknownHostException e1) {
+			e1.printStackTrace();
+		}
 		while (true) {
 			try {
 				clientSocket = echoServer.accept();
