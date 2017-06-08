@@ -438,47 +438,8 @@ public class Board {
 
 		for (i = 0; i < 19; i++) {
 			String resource = tiles[i].getResource();
-			switch (resource) {
-			case "desert":
-				res[i] = "0";
-				break;
-			case "sheep":
-				res[i] = "1";
-				break;
-			case "clay":
-				res[i] = "2";
-				break;
-			case "ore":
-				res[i] = "3";
-				break;
-			case "wheat":
-				res[i] = "4";
-				break;
-			case "wood":
-				res[i] = "5";
-				break;
-			case "harbor":
-				res[i] = "1";
-				break;
-			case "sheepHarbor":
-				res[i] = "2";
-				break;
-			case "woodHarbor":
-				res[i] = "3";
-				break;
-			case "wheatHarbor":
-				res[i] = "4";
-				break;
-			case "clayHarbor":
-				res[i] = "5";
-				break;
-			case "oreHarbor":
-				res[i] = "6";
-				break;
-			case "water":
-				res[i] = "0";
-				break;
-			}
+			res[i] = getResourceStatus(resource);
+			
 			if (tiles[i].getDice() == 0) {
 				res[i + 19] = "" + 0;
 			} else if (tiles[i].getDice() < 7) {
@@ -489,48 +450,9 @@ public class Board {
 		}
 
 		for (i = 19; i < 37; i++) {
-			String ressource = tiles[i].getResource();
-			switch (ressource) {
-			case "desert":
-				res[i + 19] = "0";
-				break;
-			case "sheep":
-				res[i + 19] = "1";
-				break;
-			case "clay":
-				res[i + 19] = "2";
-				break;
-			case "ore":
-				res[i + 19] = "3";
-				break;
-			case "wheat":
-				res[i + 19] = "4";
-				break;
-			case "wood":
-				res[i + 19] = "5";
-				break;
-			case "harbor":
-				res[i + 19] = "1";
-				break;
-			case "sheepHarbor":
-				res[i + 19] = "2";
-				break;
-			case "woodHarbor":
-				res[i + 19] = "3";
-				break;
-			case "wheatHarbor":
-				res[i + 19] = "4";
-				break;
-			case "clayHarbor":
-				res[i + 19] = "5";
-				break;
-			case "oreHarbor":
-				res[i + 19] = "6";
-				break;
-			case "water":
-				res[i + 19] = "0";
-				break;
-			}
+			String resource = tiles[i].getResource();
+			res[i + 19] = getResourceStatus(resource);
+			
 			res[i + 19 + 18] = "" + tiles[i].getOrientation();
 		}
 
@@ -539,5 +461,38 @@ public class Board {
 			result += res[i];
 		}
 		return result;
+	}
+
+	/**
+	 * Returns the resource represented as an written int
+	 * 
+	 * @param resource
+	 *            the resource as a String
+	 * @return the int-representation as a String
+	 */
+	private String getResourceStatus(String resource) {
+		switch (resource) {
+		case "desert":
+		case "water":
+			return "0";
+		case "sheep":
+		case "harbor":
+			return "1";
+		case "clay":
+		case "sheepHarbor":
+			return "2";
+		case "ore":
+		case "woodHarbor":
+			return "3";
+		case "wheat":
+		case "wheatHarbor":
+			return "4";
+		case "wood":
+		case "clayHarbor":
+			return "5";
+		case "oreHarbor":
+			return "6";
+		}
+		return "";
 	}
 }

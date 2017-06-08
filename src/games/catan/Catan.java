@@ -15,7 +15,6 @@ import userManagement.User;
  */
 public class Catan extends Game {
 
-	private ArrayList<User> playerList = new ArrayList<User>();
 	private User playerTurn;
 	private Board board;
 	
@@ -37,7 +36,7 @@ public class Catan extends Game {
 		if (playerList.size() < getMaxPlayerAmount() && !playerList.contains(user)) {
 			playerList.add(user);
 
-			// sendDataToClients("USERJOINED");
+			sendGameDataToUsers("userjoin?user=" + user.getName());
 
 			if (playerTurn == null) {
 				playerTurn = user;

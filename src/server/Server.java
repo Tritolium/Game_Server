@@ -13,8 +13,7 @@ import userManagement.UserManager;
 import java.io.*;
 
 public class Server extends Thread {
-	private ServerSocket echoServer = null;
-	private final int maxUsers = 4;
+	private ServerSocket server = null;
 	private Catan activeGame;
 	private HashMap<String, ClientThread> threads = new HashMap<String, ClientThread>();
 	private int port;
@@ -45,7 +44,7 @@ public class Server extends Thread {
 		 * less than 1023 if we are not privileged users (root).
 		 */
 		try {
-			echoServer = new ServerSocket(port);
+			server = new ServerSocket(port);
 			online = true;
 		} catch (IOException e) {
 			System.out.println(e);
@@ -64,7 +63,7 @@ public class Server extends Thread {
 		}
 		while (true) {
 			try {
-				clientSocket = echoServer.accept();
+				clientSocket = server.accept();
 				ClientThread client = new ClientThread(this, clientSocket);
 				threads.put("Client", client);
 				client.start();
@@ -129,6 +128,7 @@ public class Server extends Thread {
 			}
 			activeGame.addUser(SessionHandler.getInstance().getUser(client));
 			client.write(activeGame.getGameData("SETUP"));
+			client.setRunningGame(activeGame);
 			// client.write(
 			// "creategame?game=Catan&setup=53411505415322241344031670528157342698060510063002100101000151515242524333");
 

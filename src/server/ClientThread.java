@@ -24,6 +24,14 @@ public class ClientThread extends Thread {
 	public Socket getClientSocket(){
 		return clientSocket;
 	}
+	
+	public Game getRunningGame(){
+		return runningGame;
+	}
+	
+	public void setRunningGame(Game runningGame){
+		this.runningGame = runningGame;
+	}
 
 	public void run() {
 		try {

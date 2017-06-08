@@ -4,7 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Data {
@@ -51,5 +55,32 @@ public class Data {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public static void writeToLog(String toLog){
+		File dir = new File("log/");
+		dir.mkdirs();
+		
+		SimpleDateFormat s = new SimpleDateFormat("dd_MM_yyyy");
+		
+		File logfile = new File(dir, s.format(new Date()) + ".log");
+		
+		s = new SimpleDateFormat("dd:MM:yyyy_HH:mm:ss");
+		
+		Writer writer = null;
+		
+		try {
+			writer = new FileWriter(logfile, true);
+			writer.write(s.format(new Date()) + "::" + toLog);
+			writer.write(System.lineSeparator());
+		} catch (IOException e) {
+			System.err.println(e);
+		} finally{
+			try {
+				writer.close();
+			} catch (IOException e) {
+				System.err.println(e);
+			}
+		}
 	}
 }
