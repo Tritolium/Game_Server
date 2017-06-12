@@ -49,7 +49,7 @@ public class Catan extends Game {
 		case "SETUP":
 			board.init();
 			gameData = board.getStatus();
-			return "joingame?game=Catan&setup=" + gameData;
+			return "game=Catan&setup=" + gameData;
 			//return "joingame?game=Catan&setup=53411505415322241344031670528157342698060510063002100101000151515242524333";
 		}
 		return "";

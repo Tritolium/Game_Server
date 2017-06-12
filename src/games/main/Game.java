@@ -2,6 +2,8 @@ package games.main;
 
 import java.util.ArrayList;
 
+import org.tritol.server.GameExchange;
+
 import userManagement.User;
 
 public class Game extends Thread{
@@ -25,12 +27,14 @@ public class Game extends Thread{
 	}
 	
 	public void sendGameDataToUser(User user, String data){
-		user.send(data);
+		GameExchange response = new GameExchange("gameData", data);
+		user.send(response);
 	}
 	
 	public void sendGameDataToUsers(String data){
+		GameExchange response = new GameExchange("gameData", data);
 		for(User user: playerList){
-			user.send(data);
+			user.send(response);
 		}
 	}
 }

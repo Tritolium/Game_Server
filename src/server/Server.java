@@ -3,18 +3,12 @@ package server;
 import java.net.*;
 import java.util.HashMap;
 
-import dataManagement.Data;
-import games.catan.Catan;
-import sessionHandling.SessionHandler;
+import org.tritol.server.ClientThread;
 import userInterface.GUI;
-import userManagement.User;
-import userManagement.UserManager;
-
 import java.io.*;
 
 public class Server extends Thread {
 	private ServerSocket server = null;
-	private Catan activeGame;
 	private HashMap<String, ClientThread> threads = new HashMap<String, ClientThread>();
 	private int port;
 	private boolean online = false;
@@ -40,8 +34,8 @@ public class Server extends Thread {
 		Socket clientSocket = null;
 
 		/*
-		 * Open a server socket on port port. Note that we can't choose a port
-		 * less than 1023 if we are not privileged users (root).
+		 * Open a server socket on port port. Note that you cannot choose a port
+		 * less than 1023 if you are not privileged users (root).
 		 */
 		try {
 			server = new ServerSocket(port);
@@ -64,7 +58,7 @@ public class Server extends Thread {
 		while (true) {
 			try {
 				clientSocket = server.accept();
-				ClientThread client = new ClientThread(this, clientSocket);
+				ClientThread client = new ClientThread(new Handler(), clientSocket);
 				threads.put("Client", client);
 				client.start();
 
@@ -74,7 +68,7 @@ public class Server extends Thread {
 			}
 		}
 	}
-
+	/*
 	public void execute(ClientThread client, String s) {
 		System.out.println(s);
 		String[] split = s.split("\\?");
@@ -140,4 +134,5 @@ public class Server extends Thread {
 			break;
 		}
 	}
+	*/
 }

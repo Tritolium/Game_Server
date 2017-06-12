@@ -1,5 +1,7 @@
 package userManagement;
 
+import org.tritol.server.GameExchange;
+
 import sessionHandling.SessionHandler;
 
 public class User {
@@ -29,7 +31,12 @@ public class User {
 		this.password = password;
 	}
 	
+	public void send(GameExchange exchange){
+		SessionHandler.getInstance().getClientThread(this).send(exchange);
+	}
+	/*
 	public void send(String data){
 		SessionHandler.getInstance().getClientThread(this).write(data);
 	}
+	*/
 }

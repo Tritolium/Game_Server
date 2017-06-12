@@ -3,7 +3,8 @@ package sessionHandling;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import server.ClientThread;
+import org.tritol.server.ClientThread;
+
 import userManagement.User;
 
 public class SessionHandler {
