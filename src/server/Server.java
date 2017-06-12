@@ -4,6 +4,7 @@ import java.net.*;
 import java.util.HashMap;
 
 import org.tritol.server.ClientThread;
+
 import userInterface.GUI;
 import java.io.*;
 
@@ -12,9 +13,11 @@ public class Server extends Thread {
 	private HashMap<String, ClientThread> threads = new HashMap<String, ClientThread>();
 	private int port;
 	private boolean online = false;
+	private GameHandler handler;
 
 	public Server() {
 		super("Server");
+		this.handler = new GameHandler();
 	}
 
 	public boolean isOnline() {
@@ -58,7 +61,7 @@ public class Server extends Thread {
 		while (true) {
 			try {
 				clientSocket = server.accept();
-				ClientThread client = new ClientThread(new Handler(), clientSocket);
+				ClientThread client = new ClientThread(handler, clientSocket);
 				threads.put("Client", client);
 				client.start();
 
@@ -68,71 +71,4 @@ public class Server extends Thread {
 			}
 		}
 	}
-	/*
-	public void execute(ClientThread client, String s) {
-		System.out.println(s);
-		String[] split = s.split("\\?");
-		String command = split[0];
-		HashMap<String, String> params = new HashMap<String, String>();
-		try {
-			params = Data.parseParameters(split[1]);
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.err.println("no data");
-		} catch (NullPointerException e) {
-			System.err.println("Nullpointer");
-		}
-		switch (command) {
-		case "register":
-			String name = params.get("name");
-			String password = params.get("password");
-			if (!UserManager.getInstance().userExists(name)) {
-				UserManager.getInstance().addUser(name, password);
-				client.write("register?register=true");
-				GUI.getInstance().write("User " + name + " registered");
-			} else {
-				client.write("register?register=false");
-			}
-			break;
-		case "login":
-			name = params.get("name");
-			password = params.get("password");
-			if (UserManager.getInstance().userExists(name)) {
-				// User exists
-				User user = UserManager.getInstance().getUserByName(name);
-				if (user.checkPassword(password)) {
-					// Password OK
-					client.write("login?login=true&name=" + name);
-					SessionHandler.getInstance().addSession(user, client);
-					GUI.getInstance().write("User " + name + " logged in");
-				} else {
-					// Password not OK
-					client.write("login?login=false&name=" + name);
-				}
-			} else {
-				// TODO User not registered
-				client.write("error?error=User not registered");
-			}
-			// TODO server-side login
-			break;
-		case "joingame":
-
-			if (activeGame == null) {
-				activeGame = new Catan();
-				activeGame.init();
-			}
-			activeGame.addUser(SessionHandler.getInstance().getUser(client));
-			client.write(activeGame.getGameData("SETUP"));
-			client.setRunningGame(activeGame);
-			// client.write(
-			// "creategame?game=Catan&setup=53411505415322241344031670528157342698060510063002100101000151515242524333");
-
-			// TODO gamemanager
-			break;
-		case "disconnect":
-			client.write("disconnect");
-			GUI.getInstance().write(client.getClientSocket().getInetAddress() + " disconnected");
-			break;
-		}
-	}
-	*/
 }

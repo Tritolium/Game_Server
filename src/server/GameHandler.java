@@ -3,6 +3,7 @@ package server;
 import java.util.HashMap;
 
 import org.tritol.server.GameExchange;
+import org.tritol.server.Handler;
 
 import gameManagement.GameManager;
 import sessionHandling.SessionHandler;
@@ -10,10 +11,12 @@ import userInterface.GUI;
 import userManagement.User;
 import userManagement.UserManager;
 
-public class Handler extends org.tritol.server.Handler {
-	
+public class GameHandler extends Handler {
+	@Override
 	public void handle(GameExchange exchange) {
 
+		System.out.println(exchange);
+		
 		HashMap<String, String> params = exchange.toHashMap();
 
 		GameExchange response = new GameExchange();
